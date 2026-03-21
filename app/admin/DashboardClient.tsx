@@ -1,0 +1,185 @@
+'use client';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import ProductForm from './ProductForm';
+import PromotionForm from './PromotionForm';
+
+export default function DashboardClient({ initialProducts, initialPromotions }: { initialProducts: any[]; initialPromotions: any[] }) {
+  const router = useRouter();
+  const [tab, setTab] = useState<'products' | 'promotions'>('products');
+  const [products, setProducts] = useState(initialProducts);
+  const [promotions, setPromotions] = useState(initialPromotions);
+  const [showProductForm, setShowProductForm] = useState(false);
+  const [showPromoForm, setShowPromoForm] = useState(false);
+  const [editingProduct, setEditingProduct] = useState<any>(null);
+  const [editingPromo, setEditingPromo] = useState<any>(null);
+
+  async function logout() {
+    await fetch('/api/admin/logout', { method: 'POST' });
+    router.push('/admin/login');
+    router.refresh();
+  }
+
+  async function reloadProducts() {
+    const res = await fetch('/api/products');
+    setProducts(await res.json());
+  }
+
+  async function reloadPromotions() {
+    const res = await fetch('/api/admin/promotions');
+    setPromotions(await res.json());
+  }
+
+  async function deleteProduct(id: string) {
+    if (!confirm('¿Eliminar este producto?')) return;
+    await fetch(`/api/admin/products/${id}`, { method: 'DELETE' });
+    reloadProducts();
+  }
+
+  async function toggleProduct(id: string) {
+    await fetch(`/api/admin/products/${id}`, { method: 'PATCH' });
+    reloadProducts();
+  }
+
+  async function deletePromo(id: string) {
+    if (!confirm('¿Eliminar esta promoción?')) return;
+    await fetch(`/api/admin/promotions/${id}`, { method: 'DELETE' });
+    reloadPromotions();
+  }
+
+  return (
+    <div className="min-h-screen bg-[#FEF2F2]">
+      {/* Header */}
+      <header className="bg-[#450A0A] pt-5 pb-6 px-4">
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 rounded-2xl bg-[#DC2626]/20 flex items-center justify-center">
+              <svg viewBox="0 0 40 48" className="w-9 h-9" fill="none">
+                <ellipse cx="20" cy="20" rx="13" ry="15" fill="#FEF2F2"/>
+                <ellipse cx="14" cy="18" rx="4" ry="5" fill="#1A1A1A"/>
+                <ellipse cx="26" cy="18" rx="4" ry="5" fill="#1A1A1A"/>
+                <ellipse cx="14" cy="18" rx="2" ry="2.5" fill="#FEF2F2"/>
+                <ellipse cx="26" cy="18" rx="2" ry="2.5" fill="#FEF2F2"/>
+                <path d="M13 29 Q20 35 27 29" stroke="#1A1A1A" strokeWidth="1.5" fill="none"/>
+                <line x1="13" y1="29" x2="27" y2="29" stroke="#1A1A1A" strokeWidth="1"/>
+                <line x1="17" y1="29" x2="17" y2="33" stroke="#1A1A1A" strokeWidth="1"/>
+                <line x1="20" y1="29" x2="20" y2="34" stroke="#1A1A1A" strokeWidth="1"/>
+                <line x1="23" y1="29" x2="23" y2="33" stroke="#1A1A1A" strokeWidth="1"/>
+                <rect x="10" y="6" width="20" height="12" rx="3" fill="#CA8A04"/>
+                <ellipse cx="20" cy="18" rx="12" ry="3" fill="#A16207"/>
+              </svg>
+            </div>
+            <div>
+              <h1 className="font-heading text-white text-2xl tracking-wide">Panel Admin</h1>
+              <p className="text-white/50 text-xs font-semibold">El Carrito MX</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <Link href="/" className="bg-white/10 hover:bg-white/20 text-white px-4 py-2.5 rounded-2xl text-sm font-bold transition-colors flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955a1.126 1.126 0 011.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+              </svg>
+              <span className="hidden sm:inline">Ver Carta</span>
+            </Link>
+            <button onClick={logout} className="bg-[#DC2626]/20 hover:bg-[#DC2626]/30 text-white px-4 py-2.5 rounded-2xl text-sm font-bold transition-colors cursor-pointer flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
+              </svg>
+              <span className="hidden sm:inline">Salir</span>
+            </button>
+          </div>
+        </div>
+        <div className="max-w-6xl mx-auto mt-6 flex gap-2">
+          <button onClick={() => setTab('products')} className={`px-6 py-2.5 rounded-2xl font-bold text-sm transition-all cursor-pointer ${tab === 'products' ? 'bg-[#DC2626] text-white' : 'bg-white/10 text-white/60 hover:bg-white/20'}`}>Productos</button>
+          <button onClick={() => setTab('promotions')} className={`px-6 py-2.5 rounded-2xl font-bold text-sm transition-all cursor-pointer ${tab === 'promotions' ? 'bg-[#CA8A04] text-white' : 'bg-white/10 text-white/60 hover:bg-white/20'}`}>Promociones</button>
+        </div>
+      </header>
+
+      <div className="max-w-6xl mx-auto px-4 py-8">
+        {/* Productos */}
+        {tab === 'products' && (
+          <>
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="font-heading text-2xl text-[#450A0A]">Tus Productos</h2>
+              <button onClick={() => { setEditingProduct(null); setShowProductForm(true); }}
+                className="bg-[#006847] hover:bg-[#004D33] text-white font-bold px-5 py-2.5 rounded-2xl transition-colors cursor-pointer text-sm flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                Nuevo Producto
+              </button>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+              {products.map((p: any) => (
+                <div key={p.id} className="bg-white rounded-2xl shadow-sm border border-[#FEE2E2] overflow-hidden hover:shadow-md transition-shadow">
+                  <div className="relative h-36">
+                    {p.image ? <img src={p.image} alt={p.name} className="w-full h-full object-cover" /> : <div className="w-full h-full bg-[#FEE2E2] flex items-center justify-center text-4xl">🌮</div>}
+                    <button onClick={() => toggleProduct(p.id)}
+                      className={`absolute top-2 right-2 w-8 h-8 rounded-xl flex items-center justify-center text-white cursor-pointer transition-colors shadow-md ${p.available ? 'bg-[#006847]' : 'bg-[#FECACA]'}`}>
+                      <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                        {p.available ? <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" /> : <path strokeLinecap="round" strokeLinejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />}
+                      </svg>
+                    </button>
+                    <span className="absolute bottom-2 left-2 bg-[#450A0A]/80 text-white text-xs font-bold px-3 py-1 rounded-full">${p.price.toLocaleString('es-CL')}</span>
+                  </div>
+                  <div className="p-4">
+                    <h3 className="font-heading text-sm text-[#450A0A] truncate">{p.name}</h3>
+                    <p className="text-xs text-[#78350F] mt-0.5 truncate">{p.description}</p>
+                    <div className="flex gap-2 mt-3">
+                      <button onClick={() => { setEditingProduct(p); setShowProductForm(true); }} className="flex-1 bg-[#CA8A04]/10 hover:bg-[#CA8A04]/20 text-[#CA8A04] font-bold py-2 rounded-xl text-xs cursor-pointer transition-colors">Editar</button>
+                      <button onClick={() => deleteProduct(p.id)} className="flex-1 bg-[#DC2626]/10 hover:bg-[#DC2626]/20 text-[#DC2626] font-bold py-2 rounded-xl text-xs cursor-pointer transition-colors">Eliminar</button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+
+        {/* Promociones */}
+        {tab === 'promotions' && (
+          <>
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="font-heading text-2xl text-[#450A0A]">Promociones</h2>
+              <button onClick={() => { setEditingPromo(null); setShowPromoForm(true); }}
+                className="bg-[#CA8A04] hover:bg-[#A16207] text-white font-bold px-5 py-2.5 rounded-2xl transition-colors cursor-pointer text-sm flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                Nueva Promoción
+              </button>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {promotions.length === 0 ? (
+                <div className="col-span-2 text-center py-12 text-[#78350F]">
+                  <p className="font-heading text-lg">Sin promociones aún</p>
+                  <p className="text-sm mt-1">Crea tu primera promoción</p>
+                </div>
+              ) : promotions.map((promo: any) => (
+                <div key={promo.id} className="bg-white rounded-2xl shadow-sm border border-[#FEE2E2] p-5 hover:shadow-md transition-shadow">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h3 className="font-heading text-lg text-[#450A0A]">{promo.name}</h3>
+                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase ${promo.active ? 'bg-[#006847]/10 text-[#006847]' : 'bg-[#FEE2E2] text-[#78350F]'}`}>{promo.active ? 'Activa' : 'Inactiva'}</span>
+                      </div>
+                      <p className="text-sm text-[#78350F]">{promo.description}</p>
+                      <div className="mt-2 inline-block bg-[#DC2626]/10 text-[#DC2626] font-bold text-sm px-3 py-1 rounded-xl">
+                        {promo.type === 'percentage' ? `${promo.discount}% OFF` : `-$${promo.discount.toLocaleString('es-CL')}`}
+                      </div>
+                    </div>
+                    {promo.image && <img src={promo.image} alt={promo.name} className="w-16 h-16 rounded-xl object-cover ml-4" />}
+                  </div>
+                  <div className="flex gap-2 mt-4">
+                    <button onClick={() => { setEditingPromo(promo); setShowPromoForm(true); }} className="flex-1 bg-[#CA8A04]/10 hover:bg-[#CA8A04]/20 text-[#CA8A04] font-bold py-2 rounded-xl text-xs cursor-pointer transition-colors">Editar</button>
+                    <button onClick={() => deletePromo(promo.id)} className="flex-1 bg-[#DC2626]/10 hover:bg-[#DC2626]/20 text-[#DC2626] font-bold py-2 rounded-xl text-xs cursor-pointer transition-colors">Eliminar</button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+
+      {showProductForm && <ProductForm product={editingProduct} onSaved={() => { setShowProductForm(false); reloadProducts(); }} onClose={() => setShowProductForm(false)} />}
+      {showPromoForm && <PromotionForm promotion={editingPromo} products={products} onSaved={() => { setShowPromoForm(false); reloadPromotions(); }} onClose={() => setShowPromoForm(false)} />}
+    </div>
+  );
+}
