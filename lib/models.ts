@@ -13,7 +13,7 @@ const ProductSchema = new Schema({
   description: String,
   price: { type: Number, required: true },
   image: { type: String, default: '' },
-  category: { type: String, enum: ['tacos', 'completos', 'bebidas', 'extras'], required: true },
+  category: { type: String, required: true },
   ingredients: [IngredientSchema],
   available: { type: Boolean, default: true },
 });
