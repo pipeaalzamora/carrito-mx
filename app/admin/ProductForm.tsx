@@ -1,14 +1,51 @@
 'use client';
 import { useState, useEffect } from 'react';
 
+const BASE_CATEGORIES = ['tacos', 'completos', 'bebidas', 'extras'];
+
+function formatCLP(value: number) {
+  if (!value) return '';
+  return value.toLocaleString('es-CL');
+}
+
+function parseCLP(str: string) {
+  return parseInt(str.replace(/\./g, '').replace(/[^0-9]/g, ''), 10) || 0;
+}
+
 export default function ProductForm({ product, onSaved, onClose }: { product: any; onSaved: () => void; onClose: () => void }) {
   const [form, setForm] = useState({ name: '', description: '', price: 0, image: '', category: 'tacos', ingredients: [] as any[], available: true });
+  const [priceDisplay, setPriceDisplay] = useState('');
+  const [categories, setCategories] = useState<string[]>(BASE_CATEGORIES);
+  const [newCategory, setNewCategory] = useState('');
+  const [showNewCategory, setShowNewCategory] = useState(false);
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
-    if (product) setForm({ name: product.name, description: product.description, price: product.price, image: product.image, category: product.category, ingredients: product.ingredients.map((i: any) => ({ ...i })), available: product.available });
+    if (product) {
+      setForm({ name: product.name, description: product.description, price: product.price, image: product.image, category: product.category, ingredients: product.ingredients.map((i: any) => ({ ...i })), available: product.available });
+      setPriceDisplay(formatCLP(product.price));
+      // si la categoría del producto no está en la lista, agregarla
+      if (!BASE_CATEGORIES.includes(product.category)) {
+        setCategories(c => c.includes(product.category) ? c : [...c, product.category]);
+      }
+    }
   }, [product]);
+
+  function handlePriceChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const raw = parseCLP(e.target.value);
+    setForm(f => ({ ...f, price: raw }));
+    setPriceDisplay(raw ? formatCLP(raw) : '');
+  }
+
+  function addCategory() {
+    const cat = newCategory.trim().toLowerCase();
+    if (!cat || categories.includes(cat)) return;
+    setCategories(c => [...c, cat]);
+    setForm(f => ({ ...f, category: cat }));
+    setNewCategory('');
+    setShowNewCategory(false);
+  }
 
   async function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -57,18 +94,44 @@ export default function ProductForm({ product, onSaved, onClose }: { product: an
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="block text-[11px] font-bold text-[#78350F] uppercase tracking-[0.15em] mb-1">Precio (CLP)</label>
-              <input type="number" value={form.price} onChange={e => setForm(f => ({ ...f, price: +e.target.value }))} required className="w-full px-4 py-2.5 bg-[#FEF2F2] border-2 border-[#FEE2E2] rounded-xl focus:border-[#006847] outline-none text-[#450A0A] font-semibold" />
+              <div className="relative">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#78350F] font-bold text-sm">$</span>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  value={priceDisplay}
+                  onChange={handlePriceChange}
+                  required
+                  placeholder="0"
+                  className="w-full pl-7 pr-4 py-2.5 bg-[#FEF2F2] border-2 border-[#FEE2E2] rounded-xl focus:border-[#006847] outline-none text-[#450A0A] font-semibold [appearance:textfield]"
+                />
+              </div>
             </div>
             <div>
               <label className="block text-[11px] font-bold text-[#78350F] uppercase tracking-[0.15em] mb-1">Categoría</label>
-              <select value={form.category} onChange={e => setForm(f => ({ ...f, category: e.target.value }))} className="w-full px-4 py-2.5 bg-[#FEF2F2] border-2 border-[#FEE2E2] rounded-xl focus:border-[#006847] outline-none text-[#450A0A] font-semibold cursor-pointer">
-                <option value="tacos">Tacos</option>
-                <option value="completos">Completos</option>
-                <option value="bebidas">Bebidas</option>
-                <option value="extras">Extras</option>
+              <select value={form.category} onChange={e => { if (e.target.value === '__new__') { setShowNewCategory(true); } else { setForm(f => ({ ...f, category: e.target.value })); } }}
+                className="w-full px-4 py-2.5 bg-[#FEF2F2] border-2 border-[#FEE2E2] rounded-xl focus:border-[#006847] outline-none text-[#450A0A] font-semibold cursor-pointer capitalize">
+                {categories.map(cat => <option key={cat} value={cat} className="capitalize">{cat}</option>)}
+                <option value="__new__">+ Nueva categoría</option>
               </select>
             </div>
           </div>
+
+          {showNewCategory && (
+            <div className="flex gap-2">
+              <input
+                value={newCategory}
+                onChange={e => setNewCategory(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), addCategory())}
+                placeholder="Nombre de la categoría"
+                className="flex-1 px-4 py-2.5 bg-[#FEF2F2] border-2 border-[#FEE2E2] rounded-xl focus:border-[#006847] outline-none text-[#450A0A] font-semibold"
+                autoFocus
+              />
+              <button type="button" onClick={addCategory} className="bg-[#006847] text-white font-bold px-4 rounded-xl cursor-pointer hover:bg-[#004D33] transition-colors">OK</button>
+              <button type="button" onClick={() => setShowNewCategory(false)} className="bg-[#FEE2E2] text-[#DC2626] font-bold px-4 rounded-xl cursor-pointer">✕</button>
+            </div>
+          )}
+
           <div>
             <label className="block text-[11px] font-bold text-[#78350F] uppercase tracking-[0.15em] mb-1">Imagen</label>
             {form.image ? (
@@ -96,8 +159,7 @@ export default function ProductForm({ product, onSaved, onClose }: { product: an
             </div>
             {form.ingredients.map((ing, i) => (
               <div key={i} className="flex gap-2 mb-2 items-center">
-                <input value={ing.name} onChange={e => { const arr = [...form.ingredients]; arr[i] = { ...arr[i], name: e.target.value }; setForm(f => ({ ...f, ingredients: arr })); }} placeholder="Nombre" className="flex-1 px-3 py-2 bg-[#FEF2F2] border border-[#FEE2E2] rounded-lg text-sm text-[#450A0A] outline-none focus:border-[#006847]" />
-                <input type="number" value={ing.price} onChange={e => { const arr = [...form.ingredients]; arr[i] = { ...arr[i], price: +e.target.value }; setForm(f => ({ ...f, ingredients: arr })); }} placeholder="Precio" className="w-24 px-3 py-2 bg-[#FEF2F2] border border-[#FEE2E2] rounded-lg text-sm text-[#450A0A] outline-none focus:border-[#006847]" />
+                <input value={ing.name} onChange={e => { const arr = [...form.ingredients]; arr[i] = { ...arr[i], name: e.target.value }; setForm(f => ({ ...f, ingredients: arr })); }} placeholder="Nombre del ingrediente" className="flex-1 px-3 py-2 bg-[#FEF2F2] border border-[#FEE2E2] rounded-lg text-sm text-[#450A0A] outline-none focus:border-[#006847]" />
                 <button type="button" onClick={() => setForm(f => ({ ...f, ingredients: f.ingredients.filter((_, j) => j !== i) }))} className="text-[#DC2626] cursor-pointer">
                   <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
                 </button>

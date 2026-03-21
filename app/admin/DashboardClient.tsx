@@ -54,25 +54,12 @@ export default function DashboardClient({ initialProducts, initialPromotions }: 
       <header className="bg-[#450A0A] pt-5 pb-6 px-4">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-[#DC2626]/20 flex items-center justify-center">
-              <svg viewBox="0 0 40 48" className="w-9 h-9" fill="none">
-                <ellipse cx="20" cy="20" rx="13" ry="15" fill="#FEF2F2"/>
-                <ellipse cx="14" cy="18" rx="4" ry="5" fill="#1A1A1A"/>
-                <ellipse cx="26" cy="18" rx="4" ry="5" fill="#1A1A1A"/>
-                <ellipse cx="14" cy="18" rx="2" ry="2.5" fill="#FEF2F2"/>
-                <ellipse cx="26" cy="18" rx="2" ry="2.5" fill="#FEF2F2"/>
-                <path d="M13 29 Q20 35 27 29" stroke="#1A1A1A" strokeWidth="1.5" fill="none"/>
-                <line x1="13" y1="29" x2="27" y2="29" stroke="#1A1A1A" strokeWidth="1"/>
-                <line x1="17" y1="29" x2="17" y2="33" stroke="#1A1A1A" strokeWidth="1"/>
-                <line x1="20" y1="29" x2="20" y2="34" stroke="#1A1A1A" strokeWidth="1"/>
-                <line x1="23" y1="29" x2="23" y2="33" stroke="#1A1A1A" strokeWidth="1"/>
-                <rect x="10" y="6" width="20" height="12" rx="3" fill="#CA8A04"/>
-                <ellipse cx="20" cy="18" rx="12" ry="3" fill="#A16207"/>
-              </svg>
+            <div className="w-14 h-14 rounded-2xl overflow-hidden border border-white/20">
+              <img src="/Logo.jpeg" alt="MR.BULLS" className="w-full h-full object-cover" />
             </div>
             <div>
               <h1 className="font-heading text-white text-2xl tracking-wide">Panel Admin</h1>
-              <p className="text-white/50 text-xs font-semibold">El Carrito MX</p>
+              <p className="text-white/50 text-xs font-semibold">MR.BULLS</p>
             </div>
           </div>
           <div className="flex items-center gap-2">

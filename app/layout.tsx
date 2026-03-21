@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'El Carrito MX',
-  description: 'Tacos mexicanos & comida rápida chilena',
+  title: 'MR.BULLS',
+  description: 'Mexican food, sandwich and hot dog',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -30,24 +30,11 @@ export default function LoginPage() {
       <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: `url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80'><circle cx='40' cy='40' r='12' fill='none' stroke='%23CA8A04' stroke-width='2'/><circle cx='40' cy='40' r='6' fill='%23CA8A04'/></svg>")`, backgroundSize: '80px 80px' }} />
       <div className="relative w-full max-w-sm">
         <div className="text-center mb-8">
-          <div className="w-20 h-20 mx-auto mb-4 bg-white/10 rounded-3xl flex items-center justify-center border border-white/20">
-            <svg viewBox="0 0 40 48" className="w-12 h-12" fill="none">
-              <ellipse cx="20" cy="20" rx="13" ry="15" fill="#FEF2F2"/>
-              <ellipse cx="14" cy="18" rx="4" ry="5" fill="#1A1A1A"/>
-              <ellipse cx="26" cy="18" rx="4" ry="5" fill="#1A1A1A"/>
-              <ellipse cx="14" cy="18" rx="2" ry="2.5" fill="#FEF2F2"/>
-              <ellipse cx="26" cy="18" rx="2" ry="2.5" fill="#FEF2F2"/>
-              <path d="M13 29 Q20 35 27 29" stroke="#1A1A1A" strokeWidth="1.5" fill="none"/>
-              <line x1="13" y1="29" x2="27" y2="29" stroke="#1A1A1A" strokeWidth="1"/>
-              <line x1="17" y1="29" x2="17" y2="33" stroke="#1A1A1A" strokeWidth="1"/>
-              <line x1="20" y1="29" x2="20" y2="34" stroke="#1A1A1A" strokeWidth="1"/>
-              <line x1="23" y1="29" x2="23" y2="33" stroke="#1A1A1A" strokeWidth="1"/>
-              <rect x="10" y="6" width="20" height="12" rx="3" fill="#CA8A04"/>
-              <ellipse cx="20" cy="18" rx="12" ry="3" fill="#A16207"/>
-            </svg>
+          <div className="w-20 h-20 mx-auto mb-4 rounded-3xl overflow-hidden border border-white/20 shadow-xl">
+            <img src="/Logo.jpeg" alt="MR.BULLS" className="w-full h-full object-cover" />
           </div>
           <h1 className="font-heading text-white text-3xl">Panel Admin</h1>
-          <p className="text-white/40 text-sm mt-1">El Carrito MX</p>
+          <p className="text-white/40 text-sm mt-1">MR.BULLS</p>
         </div>
         <div className="bg-white rounded-3xl p-8 shadow-2xl">
           <form onSubmit={handleSubmit}>

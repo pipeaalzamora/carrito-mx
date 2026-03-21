@@ -39,7 +39,7 @@ export default function ProductCard({ product }: { product: Product }) {
             <div className="flex flex-wrap gap-1.5">
               {product.ingredients.map((ing) => (
                 <span key={ing.id} className="text-xs font-semibold px-3 py-1.5 rounded-xl bg-[#FEF2F2] text-[#78350F] border border-[#FEE2E2]">
-                  {ing.name}{ing.price > 0 && <span className="ml-1 opacity-60">+${ing.price.toLocaleString('es-CL')}</span>}
+                  {ing.name}
                 </span>
               ))}
             </div>
