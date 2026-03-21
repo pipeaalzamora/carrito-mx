@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { useState, useEffect } from 'react';
 
 const BASE_CATEGORIES = ['tacos', 'completos', 'bebidas', 'extras'];
@@ -73,10 +73,10 @@ export default function ProductForm({ product, onSaved, onClose }: { product: an
   }
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-[#450A0A]/50 backdrop-blur-md" onClick={onClose} />
+    <div className="fixed inset-0 z-60 flex items-center justify-center p-4">
+      <div className="absolute inset-0 bg-brand-dark/50 backdrop-blur-md" onClick={onClose} />
       <div className="relative bg-white rounded-3xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
-        <div className="bg-[#006847] p-5 rounded-t-3xl flex items-center justify-between sticky top-0 z-10">
+        <div className="bg-mexico-green p-5 rounded-t-3xl flex items-center justify-between sticky top-0 z-10">
           <h2 className="font-heading text-white text-xl">{product ? 'Editar' : 'Nuevo'} Producto</h2>
           <button onClick={onClose} className="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 flex items-center justify-center cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
@@ -84,18 +84,18 @@ export default function ProductForm({ product, onSaved, onClose }: { product: an
         </div>
         <form onSubmit={submit} className="p-5 space-y-4">
           <div>
-            <label className="block text-[11px] font-bold text-[#78350F] uppercase tracking-[0.15em] mb-1">Nombre</label>
-            <input value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} required className="w-full px-4 py-2.5 bg-[#FEF2F2] border-2 border-[#FEE2E2] rounded-xl focus:border-[#006847] outline-none text-[#450A0A] font-semibold" />
+            <label className="block text-[11px] font-bold text-brand-dark-muted uppercase tracking-[0.15em] mb-1">Nombre</label>
+            <input value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} required className="w-full px-4 py-2.5 bg-brand-bg border-2 border-brand-border-light rounded-xl focus:border-mexico-green outline-none text-brand-dark font-semibold" />
           </div>
           <div>
-            <label className="block text-[11px] font-bold text-[#78350F] uppercase tracking-[0.15em] mb-1">Descripción</label>
-            <textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} rows={2} className="w-full px-4 py-2.5 bg-[#FEF2F2] border-2 border-[#FEE2E2] rounded-xl focus:border-[#006847] outline-none text-[#450A0A] resize-none" />
+            <label className="block text-[11px] font-bold text-brand-dark-muted uppercase tracking-[0.15em] mb-1">Descripción</label>
+            <textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} rows={2} className="w-full px-4 py-2.5 bg-brand-bg border-2 border-brand-border-light rounded-xl focus:border-mexico-green outline-none text-brand-dark resize-none" />
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-[11px] font-bold text-[#78350F] uppercase tracking-[0.15em] mb-1">Precio (CLP)</label>
+              <label className="block text-[11px] font-bold text-brand-dark-muted uppercase tracking-[0.15em] mb-1">Precio (CLP)</label>
               <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#78350F] font-bold text-sm">$</span>
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-brand-dark-muted font-bold text-sm">$</span>
                 <input
                   type="text"
                   inputMode="numeric"
@@ -103,14 +103,14 @@ export default function ProductForm({ product, onSaved, onClose }: { product: an
                   onChange={handlePriceChange}
                   required
                   placeholder="0"
-                  className="w-full pl-7 pr-4 py-2.5 bg-[#FEF2F2] border-2 border-[#FEE2E2] rounded-xl focus:border-[#006847] outline-none text-[#450A0A] font-semibold [appearance:textfield]"
+                  className="w-full pl-7 pr-4 py-2.5 bg-brand-bg border-2 border-brand-border-light rounded-xl focus:border-mexico-green outline-none text-brand-dark font-semibold [appearance:textfield]"
                 />
               </div>
             </div>
             <div>
-              <label className="block text-[11px] font-bold text-[#78350F] uppercase tracking-[0.15em] mb-1">Categoría</label>
+              <label className="block text-[11px] font-bold text-brand-dark-muted uppercase tracking-[0.15em] mb-1">Categoría</label>
               <select value={form.category} onChange={e => { if (e.target.value === '__new__') { setShowNewCategory(true); } else { setForm(f => ({ ...f, category: e.target.value })); } }}
-                className="w-full px-4 py-2.5 bg-[#FEF2F2] border-2 border-[#FEE2E2] rounded-xl focus:border-[#006847] outline-none text-[#450A0A] font-semibold cursor-pointer capitalize">
+                className="w-full px-4 py-2.5 bg-brand-bg border-2 border-brand-border-light rounded-xl focus:border-mexico-green outline-none text-brand-dark font-semibold cursor-pointer capitalize">
                 {categories.map(cat => <option key={cat} value={cat} className="capitalize">{cat}</option>)}
                 <option value="__new__">+ Nueva categoría</option>
               </select>
@@ -124,29 +124,29 @@ export default function ProductForm({ product, onSaved, onClose }: { product: an
                 onChange={e => setNewCategory(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), addCategory())}
                 placeholder="Nombre de la categoría"
-                className="flex-1 px-4 py-2.5 bg-[#FEF2F2] border-2 border-[#FEE2E2] rounded-xl focus:border-[#006847] outline-none text-[#450A0A] font-semibold"
+                className="flex-1 px-4 py-2.5 bg-brand-bg border-2 border-brand-border-light rounded-xl focus:border-mexico-green outline-none text-brand-dark font-semibold"
                 autoFocus
               />
-              <button type="button" onClick={addCategory} className="bg-[#006847] text-white font-bold px-4 rounded-xl cursor-pointer hover:bg-[#004D33] transition-colors">OK</button>
-              <button type="button" onClick={() => setShowNewCategory(false)} className="bg-[#FEE2E2] text-[#DC2626] font-bold px-4 rounded-xl cursor-pointer">✕</button>
+              <button type="button" onClick={addCategory} className="bg-mexico-green text-white font-bold px-4 rounded-xl cursor-pointer hover:bg-mexico-green-dark transition-colors">OK</button>
+              <button type="button" onClick={() => setShowNewCategory(false)} className="bg-brand-border-light text-primary font-bold px-4 rounded-xl cursor-pointer">✕</button>
             </div>
           )}
 
           <div>
-            <label className="block text-[11px] font-bold text-[#78350F] uppercase tracking-[0.15em] mb-1">Imagen</label>
+            <label className="block text-[11px] font-bold text-brand-dark-muted uppercase tracking-[0.15em] mb-1">Imagen</label>
             {form.image ? (
               <div className="relative mb-2">
-                <img src={form.image} alt="preview" className="w-full h-40 object-cover rounded-2xl border-2 border-[#FEE2E2]" />
-                <button type="button" onClick={() => setForm(f => ({ ...f, image: '' }))} className="absolute top-2 right-2 w-7 h-7 bg-[#DC2626] text-white rounded-xl flex items-center justify-center cursor-pointer">
+                <img src={form.image} alt="preview" className="w-full h-40 object-cover rounded-2xl border-2 border-brand-border-light" />
+                <button type="button" onClick={() => setForm(f => ({ ...f, image: '' }))} className="absolute top-2 right-2 w-7 h-7 bg-primary text-white rounded-xl flex items-center justify-center cursor-pointer">
                   <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
                 </button>
               </div>
             ) : (
-              <label className="flex flex-col items-center justify-center w-full h-36 border-2 border-dashed border-[#FECACA] rounded-2xl cursor-pointer bg-[#FEF2F2] hover:border-[#006847] transition-all group">
-                {uploading ? <div className="w-8 h-8 border-2 border-[#006847] border-t-transparent rounded-full animate-spin" /> : <>
-                  <svg xmlns="http://www.w3.org/2000/svg" className="w-10 h-10 text-[#FECACA] group-hover:text-[#006847] transition-colors mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" /></svg>
-                  <span className="text-sm font-bold text-[#78350F] group-hover:text-[#006847] transition-colors">Haz clic o arrastra</span>
-                  <span className="text-xs text-[#78350F]/60 mt-1">JPG, PNG o WebP</span>
+              <label className="flex flex-col items-center justify-center w-full h-36 border-2 border-dashed border-brand-border rounded-2xl cursor-pointer bg-brand-bg hover:border-mexico-green transition-all group">
+                {uploading ? <div className="w-8 h-8 border-2 border-mexico-green border-t-transparent rounded-full animate-spin" /> : <>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-10 h-10 text-brand-border group-hover:text-mexico-green transition-colors mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" /></svg>
+                  <span className="text-sm font-bold text-brand-dark-muted group-hover:text-mexico-green transition-colors">Haz clic o arrastra</span>
+                  <span className="text-xs text-brand-dark-muted/60 mt-1">JPG, PNG o WebP</span>
                 </>}
                 <input type="file" accept="image/*" onChange={handleFile} className="sr-only" />
               </label>
@@ -154,23 +154,23 @@ export default function ProductForm({ product, onSaved, onClose }: { product: an
           </div>
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label className="text-[11px] font-bold text-[#78350F] uppercase tracking-[0.15em]">Ingredientes</label>
-              <button type="button" onClick={() => setForm(f => ({ ...f, ingredients: [...f.ingredients, { id: `ing-${Date.now()}`, name: '', price: 0, available: true }] }))} className="text-[#006847] text-xs font-bold cursor-pointer hover:underline">+ Agregar</button>
+              <label className="text-[11px] font-bold text-brand-dark-muted uppercase tracking-[0.15em]">Ingredientes</label>
+              <button type="button" onClick={() => setForm(f => ({ ...f, ingredients: [...f.ingredients, { id: `ing-${Date.now()}`, name: '', price: 0, available: true }] }))} className="text-mexico-green text-xs font-bold cursor-pointer hover:underline">+ Agregar</button>
             </div>
             {form.ingredients.map((ing, i) => (
               <div key={i} className="flex gap-2 mb-2 items-center">
-                <input value={ing.name} onChange={e => { const arr = [...form.ingredients]; arr[i] = { ...arr[i], name: e.target.value }; setForm(f => ({ ...f, ingredients: arr })); }} placeholder="Nombre del ingrediente" className="flex-1 px-3 py-2 bg-[#FEF2F2] border border-[#FEE2E2] rounded-lg text-sm text-[#450A0A] outline-none focus:border-[#006847]" />
-                <button type="button" onClick={() => setForm(f => ({ ...f, ingredients: f.ingredients.filter((_, j) => j !== i) }))} className="text-[#DC2626] cursor-pointer">
+                <input value={ing.name} onChange={e => { const arr = [...form.ingredients]; arr[i] = { ...arr[i], name: e.target.value }; setForm(f => ({ ...f, ingredients: arr })); }} placeholder="Nombre del ingrediente" className="flex-1 px-3 py-2 bg-brand-bg border border-brand-border-light rounded-lg text-sm text-brand-dark outline-none focus:border-mexico-green" />
+                <button type="button" onClick={() => setForm(f => ({ ...f, ingredients: f.ingredients.filter((_, j) => j !== i) }))} className="text-primary cursor-pointer">
                   <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
                 </button>
               </div>
             ))}
           </div>
           <label className="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" checked={form.available} onChange={e => setForm(f => ({ ...f, available: e.target.checked }))} className="w-4 h-4 accent-[#006847] cursor-pointer" />
-            <span className="text-sm font-semibold text-[#450A0A]">Disponible</span>
+            <input type="checkbox" checked={form.available} onChange={e => setForm(f => ({ ...f, available: e.target.checked }))} className="w-4 h-4 accent-mexico-green cursor-pointer" />
+            <span className="text-sm font-semibold text-brand-dark">Disponible</span>
           </label>
-          <button type="submit" disabled={loading} className="w-full bg-[#DC2626] hover:bg-[#991B1B] disabled:bg-[#FECACA] text-white font-bold py-3 rounded-2xl transition-all cursor-pointer text-sm uppercase tracking-wide">
+          <button type="submit" disabled={loading} className="w-full bg-primary hover:bg-primary-dark disabled:bg-brand-border text-white font-bold py-3 rounded-2xl transition-all cursor-pointer text-sm uppercase tracking-wide">
             {loading ? 'Guardando...' : product ? 'Actualizar Producto' : 'Crear Producto'}
           </button>
         </form>

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -49,9 +49,9 @@ export default function DashboardClient({ initialProducts, initialPromotions }: 
   }
 
   return (
-    <div className="min-h-screen bg-[#FEF2F2]">
+    <div className="min-h-screen bg-brand-bg">
       {/* Header */}
-      <header className="bg-[#450A0A] pt-5 pb-6 px-4">
+      <header className="bg-brand-dark pt-5 pb-6 px-4">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="w-14 h-14 rounded-2xl overflow-hidden border border-white/20">
@@ -69,7 +69,7 @@ export default function DashboardClient({ initialProducts, initialPromotions }: 
               </svg>
               <span className="hidden sm:inline">Ver Carta</span>
             </Link>
-            <button onClick={logout} className="bg-[#DC2626]/20 hover:bg-[#DC2626]/30 text-white px-4 py-2.5 rounded-2xl text-sm font-bold transition-colors cursor-pointer flex items-center gap-2">
+            <button onClick={logout} className="bg-primary/20 hover:bg-primary/30 text-white px-4 py-2.5 rounded-2xl text-sm font-bold transition-colors cursor-pointer flex items-center gap-2">
               <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
               </svg>
@@ -78,8 +78,8 @@ export default function DashboardClient({ initialProducts, initialPromotions }: 
           </div>
         </div>
         <div className="max-w-6xl mx-auto mt-6 flex gap-2">
-          <button onClick={() => setTab('products')} className={`px-6 py-2.5 rounded-2xl font-bold text-sm transition-all cursor-pointer ${tab === 'products' ? 'bg-[#DC2626] text-white' : 'bg-white/10 text-white/60 hover:bg-white/20'}`}>Productos</button>
-          <button onClick={() => setTab('promotions')} className={`px-6 py-2.5 rounded-2xl font-bold text-sm transition-all cursor-pointer ${tab === 'promotions' ? 'bg-[#CA8A04] text-white' : 'bg-white/10 text-white/60 hover:bg-white/20'}`}>Promociones</button>
+          <button onClick={() => setTab('products')} className={`px-6 py-2.5 rounded-2xl font-bold text-sm transition-all cursor-pointer ${tab === 'products' ? 'bg-primary text-white' : 'bg-white/10 text-white/60 hover:bg-white/20'}`}>Productos</button>
+          <button onClick={() => setTab('promotions')} className={`px-6 py-2.5 rounded-2xl font-bold text-sm transition-all cursor-pointer ${tab === 'promotions' ? 'bg-cta text-white' : 'bg-white/10 text-white/60 hover:bg-white/20'}`}>Promociones</button>
         </div>
       </header>
 
@@ -88,32 +88,32 @@ export default function DashboardClient({ initialProducts, initialPromotions }: 
         {tab === 'products' && (
           <>
             <div className="flex items-center justify-between mb-6">
-              <h2 className="font-heading text-2xl text-[#450A0A]">Tus Productos</h2>
+              <h2 className="font-heading text-2xl text-brand-dark">Tus Productos</h2>
               <button onClick={() => { setEditingProduct(null); setShowProductForm(true); }}
-                className="bg-[#006847] hover:bg-[#004D33] text-white font-bold px-5 py-2.5 rounded-2xl transition-colors cursor-pointer text-sm flex items-center gap-2">
+                className="bg-mexico-green hover:bg-mexico-green-dark text-white font-bold px-5 py-2.5 rounded-2xl transition-colors cursor-pointer text-sm flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
                 Nuevo Producto
               </button>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
               {products.map((p: any) => (
-                <div key={p.id} className="bg-white rounded-2xl shadow-sm border border-[#FEE2E2] overflow-hidden hover:shadow-md transition-shadow">
+                <div key={p.id} className="bg-white rounded-2xl shadow-sm border border-brand-border-light overflow-hidden hover:shadow-md transition-shadow">
                   <div className="relative h-36">
-                    {p.image ? <img src={p.image} alt={p.name} className="w-full h-full object-cover" /> : <div className="w-full h-full bg-[#FEE2E2] flex items-center justify-center text-4xl">🌮</div>}
+                    {p.image ? <img src={p.image} alt={p.name} className="w-full h-full object-cover" /> : <div className="w-full h-full bg-brand-border-light flex items-center justify-center text-4xl">🌮</div>}
                     <button onClick={() => toggleProduct(p.id)}
-                      className={`absolute top-2 right-2 w-8 h-8 rounded-xl flex items-center justify-center text-white cursor-pointer transition-colors shadow-md ${p.available ? 'bg-[#006847]' : 'bg-[#FECACA]'}`}>
+                      className={`absolute top-2 right-2 w-8 h-8 rounded-xl flex items-center justify-center text-white cursor-pointer transition-colors shadow-md ${p.available ? 'bg-mexico-green' : 'bg-brand-border'}`}>
                       <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                         {p.available ? <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" /> : <path strokeLinecap="round" strokeLinejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />}
                       </svg>
                     </button>
-                    <span className="absolute bottom-2 left-2 bg-[#450A0A]/80 text-white text-xs font-bold px-3 py-1 rounded-full">${p.price.toLocaleString('es-CL')}</span>
+                    <span className="absolute bottom-2 left-2 bg-brand-dark/80 text-white text-xs font-bold px-3 py-1 rounded-full">${p.price.toLocaleString('es-CL')}</span>
                   </div>
                   <div className="p-4">
-                    <h3 className="font-heading text-sm text-[#450A0A] truncate">{p.name}</h3>
-                    <p className="text-xs text-[#78350F] mt-0.5 truncate">{p.description}</p>
+                    <h3 className="font-heading text-sm text-brand-dark truncate">{p.name}</h3>
+                    <p className="text-xs text-brand-dark-muted mt-0.5 truncate">{p.description}</p>
                     <div className="flex gap-2 mt-3">
-                      <button onClick={() => { setEditingProduct(p); setShowProductForm(true); }} className="flex-1 bg-[#CA8A04]/10 hover:bg-[#CA8A04]/20 text-[#CA8A04] font-bold py-2 rounded-xl text-xs cursor-pointer transition-colors">Editar</button>
-                      <button onClick={() => deleteProduct(p.id)} className="flex-1 bg-[#DC2626]/10 hover:bg-[#DC2626]/20 text-[#DC2626] font-bold py-2 rounded-xl text-xs cursor-pointer transition-colors">Eliminar</button>
+                      <button onClick={() => { setEditingProduct(p); setShowProductForm(true); }} className="flex-1 bg-cta/10 hover:bg-cta/20 text-[#CA8A04] font-bold py-2 rounded-xl text-xs cursor-pointer transition-colors">Editar</button>
+                      <button onClick={() => deleteProduct(p.id)} className="flex-1 bg-primary/10 hover:bg-primary/20 text-primary font-bold py-2 rounded-xl text-xs cursor-pointer transition-colors">Eliminar</button>
                     </div>
                   </div>
                 </div>
@@ -126,37 +126,37 @@ export default function DashboardClient({ initialProducts, initialPromotions }: 
         {tab === 'promotions' && (
           <>
             <div className="flex items-center justify-between mb-6">
-              <h2 className="font-heading text-2xl text-[#450A0A]">Promociones</h2>
+              <h2 className="font-heading text-2xl text-brand-dark">Promociones</h2>
               <button onClick={() => { setEditingPromo(null); setShowPromoForm(true); }}
-                className="bg-[#CA8A04] hover:bg-[#A16207] text-white font-bold px-5 py-2.5 rounded-2xl transition-colors cursor-pointer text-sm flex items-center gap-2">
+                className="bg-cta hover:bg-cta-hover text-white font-bold px-5 py-2.5 rounded-2xl transition-colors cursor-pointer text-sm flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
                 Nueva Promoción
               </button>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {promotions.length === 0 ? (
-                <div className="col-span-2 text-center py-12 text-[#78350F]">
+                <div className="col-span-2 text-center py-12 text-brand-dark-muted">
                   <p className="font-heading text-lg">Sin promociones aún</p>
                   <p className="text-sm mt-1">Crea tu primera promoción</p>
                 </div>
               ) : promotions.map((promo: any) => (
-                <div key={promo.id} className="bg-white rounded-2xl shadow-sm border border-[#FEE2E2] p-5 hover:shadow-md transition-shadow">
+                <div key={promo.id} className="bg-white rounded-2xl shadow-sm border border-brand-border-light p-5 hover:shadow-md transition-shadow">
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
-                        <h3 className="font-heading text-lg text-[#450A0A]">{promo.name}</h3>
-                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase ${promo.active ? 'bg-[#006847]/10 text-[#006847]' : 'bg-[#FEE2E2] text-[#78350F]'}`}>{promo.active ? 'Activa' : 'Inactiva'}</span>
+                        <h3 className="font-heading text-lg text-brand-dark">{promo.name}</h3>
+                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase ${promo.active ? 'bg-mexico-green/10 text-mexico-green' : 'bg-brand-border-light text-brand-dark-muted'}`}>{promo.active ? 'Activa' : 'Inactiva'}</span>
                       </div>
-                      <p className="text-sm text-[#78350F]">{promo.description}</p>
-                      <div className="mt-2 inline-block bg-[#DC2626]/10 text-[#DC2626] font-bold text-sm px-3 py-1 rounded-xl">
+                      <p className="text-sm text-brand-dark-muted">{promo.description}</p>
+                      <div className="mt-2 inline-block bg-primary/10 text-primary font-bold text-sm px-3 py-1 rounded-xl">
                         {promo.type === 'percentage' ? `${promo.discount}% OFF` : `-$${promo.discount.toLocaleString('es-CL')}`}
                       </div>
                     </div>
                     {promo.image && <img src={promo.image} alt={promo.name} className="w-16 h-16 rounded-xl object-cover ml-4" />}
                   </div>
                   <div className="flex gap-2 mt-4">
-                    <button onClick={() => { setEditingPromo(promo); setShowPromoForm(true); }} className="flex-1 bg-[#CA8A04]/10 hover:bg-[#CA8A04]/20 text-[#CA8A04] font-bold py-2 rounded-xl text-xs cursor-pointer transition-colors">Editar</button>
-                    <button onClick={() => deletePromo(promo.id)} className="flex-1 bg-[#DC2626]/10 hover:bg-[#DC2626]/20 text-[#DC2626] font-bold py-2 rounded-xl text-xs cursor-pointer transition-colors">Eliminar</button>
+                    <button onClick={() => { setEditingPromo(promo); setShowPromoForm(true); }} className="flex-1 bg-cta/10 hover:bg-cta/20 text-[#CA8A04] font-bold py-2 rounded-xl text-xs cursor-pointer transition-colors">Editar</button>
+                    <button onClick={() => deletePromo(promo.id)} className="flex-1 bg-primary/10 hover:bg-primary/20 text-primary font-bold py-2 rounded-xl text-xs cursor-pointer transition-colors">Eliminar</button>
                   </div>
                 </div>
               ))}

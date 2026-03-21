@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { useState } from 'react';
 import Link from 'next/link';
 import ProductCard from '@/components/ProductCard';
@@ -18,9 +18,9 @@ export default function MenuClient({ products, promotions }: { products: any[]; 
   return (
     <div className="min-h-screen">
       {/* Hero */}
-      <section className="relative pb-20 px-4 overflow-hidden bg-[#450A0A]">
+      <section className="relative pb-20 px-4 overflow-hidden bg-brand-dark">
         <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: `url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80'><circle cx='40' cy='40' r='12' fill='none' stroke='%23CA8A04' stroke-width='2'/><circle cx='40' cy='40' r='6' fill='%23CA8A04'/><circle cx='40' cy='40' r='3' fill='%231A1A1A'/></svg>")`, backgroundSize: '80px 80px' }} />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#450A0A]/80 via-[#450A0A]/90 to-[#450A0A]" />
+        <div className="absolute inset-0 bg-linear-to-b from-brand-dark/80 via-brand-dark/90 to-brand-dark" />
         <div className="absolute top-16 left-8 opacity-20">
           <svg viewBox="0 0 60 60" className="w-20 h-20" fill="none">
             {[14,46].map(cy => <circle key={cy} cx="30" cy={cy} r="7" fill="#DC2626"/>)}
@@ -33,15 +33,15 @@ export default function MenuClient({ products, promotions }: { products: any[]; 
             <img src="/Logo.jpeg" alt="MR.BULLS" className="w-full h-full object-cover" />
           </div>
           <h1 className="font-heading text-4xl sm:text-5xl md:text-7xl leading-[1.1] mb-4">
-            <span className="text-[#DC2626]">MR.BULLS</span>
+            <span className="text-primary">MR.BULLS</span>
           </h1>
           <p className="text-base md:text-xl text-white/60 max-w-2xl mx-auto leading-relaxed font-light px-2">
             Mexican food, sandwich and hot dog. El mejor sabor en cada bocado.
           </p>
           <div className="flex justify-center gap-1.5 mt-8">
-            <div className="w-20 h-2 rounded-full bg-[#006847]" />
+            <div className="w-20 h-2 rounded-full bg-mexico-green" />
             <div className="w-20 h-2 rounded-full bg-white/80" />
-            <div className="w-20 h-2 rounded-full bg-[#DC2626]" />
+            <div className="w-20 h-2 rounded-full bg-primary" />
           </div>
         </div>
       </section>
@@ -51,7 +51,7 @@ export default function MenuClient({ products, promotions }: { products: any[]; 
         <section className="max-w-6xl mx-auto px-4 -mt-8 relative z-10 mb-8">
           <div className="flex gap-4 overflow-x-auto pb-2 snap-x snap-mandatory scrollbar-hide">
             {promotions.map(promo => (
-              <div key={promo.id} className="snap-start shrink-0 w-80 bg-gradient-to-br from-[#CA8A04] to-[#A16207] rounded-2xl p-5 text-white shadow-xl">
+              <div key={promo.id} className="snap-start shrink-0 w-80 bg-linear-to-br from-[#CA8A04] to-cta-hover rounded-2xl p-5 text-white shadow-xl">
                 <div className="flex items-start justify-between">
                   <div>
                     <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/60">Promoción</span>
@@ -74,7 +74,7 @@ export default function MenuClient({ products, promotions }: { products: any[]; 
         <div className="flex gap-2 overflow-x-auto scrollbar-hide snap-x snap-mandatory">
           {CATEGORIES.map(cat => (
             <button key={cat.value} onClick={() => setCategory(cat.value)}
-              className={`snap-start shrink-0 px-5 py-2.5 rounded-2xl font-bold text-sm transition-all duration-200 cursor-pointer tracking-wide whitespace-nowrap ${category === cat.value ? 'bg-[#DC2626] text-white shadow-lg' : 'bg-white text-[#78350F] hover:bg-[#FFF7ED] border border-[#FEE2E2]'}`}>
+              className={`snap-start shrink-0 px-5 py-2.5 rounded-2xl font-bold text-sm transition-all duration-200 cursor-pointer tracking-wide whitespace-nowrap ${category === cat.value ? 'bg-primary text-white shadow-lg' : 'bg-white text-brand-dark-muted hover:bg-brand-bg-warm border border-brand-border-light'}`}>
               {cat.label}
             </button>
           ))}
@@ -85,8 +85,8 @@ export default function MenuClient({ products, promotions }: { products: any[]; 
       <section className="max-w-6xl mx-auto px-4 py-8">
         {filtered.length === 0 ? (
           <div className="text-center py-20">
-            <p className="font-heading text-xl text-[#78350F]">No hay productos aquí</p>
-            <p className="text-sm text-[#78350F]/60 mt-1">Prueba otra categoría</p>
+            <p className="font-heading text-xl text-brand-dark-muted">No hay productos aquí</p>
+            <p className="text-sm text-brand-dark-muted/60 mt-1">Prueba otra categoría</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8">
@@ -96,14 +96,14 @@ export default function MenuClient({ products, promotions }: { products: any[]; 
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#450A0A] text-white/60 py-10 px-4">
+      <footer className="bg-brand-dark text-white/60 py-10 px-4">
         <div className="max-w-6xl mx-auto text-center">
           <p className="font-heading text-white text-xl tracking-wide">MR.BULLS</p>
           <p className="text-sm mt-1">Mexican food, sandwich and hot dog</p>
           <div className="flex justify-center gap-1 mt-4">
-            <div className="w-8 h-1 rounded-full bg-[#006847]" />
+            <div className="w-8 h-1 rounded-full bg-mexico-green" />
             <div className="w-8 h-1 rounded-full bg-white/40" />
-            <div className="w-8 h-1 rounded-full bg-[#DC2626]" />
+            <div className="w-8 h-1 rounded-full bg-primary" />
           </div>
           <Link href="/admin" className="inline-block mt-6 text-white/30 hover:text-white/60 text-xs transition-colors">
             Panel Admin

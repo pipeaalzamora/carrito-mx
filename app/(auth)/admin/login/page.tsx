@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -26,7 +26,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#450A0A] flex items-center justify-center px-4 relative">
+    <div className="min-h-screen bg-brand-dark flex items-center justify-center px-4 relative">
       <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: `url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80'><circle cx='40' cy='40' r='12' fill='none' stroke='%23CA8A04' stroke-width='2'/><circle cx='40' cy='40' r='6' fill='%23CA8A04'/></svg>")`, backgroundSize: '80px 80px' }} />
       <div className="relative w-full max-w-sm">
         <div className="text-center mb-8">
@@ -39,23 +39,23 @@ export default function LoginPage() {
         <div className="bg-white rounded-3xl p-8 shadow-2xl">
           <form onSubmit={handleSubmit}>
             <div className="mb-5">
-              <label className="block text-sm font-bold text-[#450A0A] mb-2">Usuario</label>
+              <label className="block text-sm font-bold text-brand-dark mb-2">Usuario</label>
               <input type="text" value={username} onChange={e => setUsername(e.target.value)} required
-                className="w-full bg-[#FEF2F2] border border-[#FEE2E2] rounded-2xl px-4 py-3 text-[#450A0A] text-sm focus:outline-none focus:border-[#DC2626] transition-colors"
+                className="w-full bg-brand-bg border border-brand-border-light rounded-2xl px-4 py-3 text-brand-dark text-sm focus:outline-none focus:border-primary transition-colors"
                 placeholder="admin" />
             </div>
             <div className="mb-6">
-              <label className="block text-sm font-bold text-[#450A0A] mb-2">Contraseña</label>
+              <label className="block text-sm font-bold text-brand-dark mb-2">Contraseña</label>
               <input type="password" value={password} onChange={e => setPassword(e.target.value)} required
-                className="w-full bg-[#FEF2F2] border border-[#FEE2E2] rounded-2xl px-4 py-3 text-[#450A0A] text-sm focus:outline-none focus:border-[#DC2626] transition-colors"
+                className="w-full bg-brand-bg border border-brand-border-light rounded-2xl px-4 py-3 text-brand-dark text-sm focus:outline-none focus:border-primary transition-colors"
                 placeholder="••••••••" />
             </div>
             {error && (
-              <div className="bg-[#DC2626]/10 text-[#DC2626] text-sm font-semibold px-4 py-3 rounded-2xl mb-5 text-center">
+              <div className="bg-primary/10 text-primary text-sm font-semibold px-4 py-3 rounded-2xl mb-5 text-center">
                 Usuario o contraseña incorrectos
               </div>
             )}
-            <button type="submit" className="w-full bg-[#006847] hover:bg-[#004D33] text-white font-bold py-3.5 rounded-2xl transition-colors cursor-pointer text-sm tracking-wide">
+            <button type="submit" className="w-full bg-mexico-green hover:bg-mexico-green-dark text-white font-bold py-3.5 rounded-2xl transition-colors cursor-pointer text-sm tracking-wide">
               Entrar
             </button>
           </form>
