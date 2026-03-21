@@ -49,27 +49,28 @@ export default function DashboardClient({ initialProducts, initialPromotions }: 
   }
 
   return (
-    <div className="min-h-screen bg-brand-bg">
+    <div className="min-h-screen bg-[#FEF2F2]">
       {/* Header */}
-      <header className="bg-brand-dark pt-5 pb-6 px-4">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
+      <header className="pt-5 pb-6 px-4" style={{ background: 'linear-gradient(135deg, #006847 0%, #006847 30%, #ffffff 45%, #ffffff 55%, #DC2626 70%, #DC2626 100%)' }}>
+        <div className="absolute inset-0 bg-white/20 pointer-events-none" />
+        <div className="max-w-6xl mx-auto flex items-center justify-between relative">
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-2xl overflow-hidden border border-white/20">
+            <div className="w-14 h-14 rounded-2xl overflow-hidden border-2 border-black/10 shadow-md">
               <img src="/Logo.jpeg" alt="MR.BULLS" className="w-full h-full object-cover" />
             </div>
             <div>
-              <h1 className="font-heading text-white text-2xl tracking-wide">Panel Admin</h1>
-              <p className="text-white/50 text-xs font-semibold">MR.BULLS</p>
+              <h1 className="font-heading text-black text-2xl tracking-wide drop-shadow-sm">Panel Admin</h1>
+              <p className="text-black/60 text-xs font-semibold">MR.BULLS</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <Link href="/" className="bg-white/10 hover:bg-white/20 text-white px-4 py-2.5 rounded-2xl text-sm font-bold transition-colors flex items-center gap-2">
+            <Link href="/" className="bg-black/10 hover:bg-black/20 text-black px-4 py-2.5 rounded-2xl text-sm font-bold transition-colors flex items-center gap-2">
               <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955a1.126 1.126 0 011.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
               </svg>
               <span className="hidden sm:inline">Ver Carta</span>
             </Link>
-            <button onClick={logout} className="bg-primary/20 hover:bg-primary/30 text-white px-4 py-2.5 rounded-2xl text-sm font-bold transition-colors cursor-pointer flex items-center gap-2">
+            <button onClick={logout} className="bg-black/10 hover:bg-black/20 text-black px-4 py-2.5 rounded-2xl text-sm font-bold transition-colors cursor-pointer flex items-center gap-2">
               <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
               </svg>
@@ -77,9 +78,9 @@ export default function DashboardClient({ initialProducts, initialPromotions }: 
             </button>
           </div>
         </div>
-        <div className="max-w-6xl mx-auto mt-6 flex gap-2">
-          <button onClick={() => setTab('products')} className={`px-6 py-2.5 rounded-2xl font-bold text-sm transition-all cursor-pointer ${tab === 'products' ? 'bg-primary text-white' : 'bg-white/10 text-white/60 hover:bg-white/20'}`}>Productos</button>
-          <button onClick={() => setTab('promotions')} className={`px-6 py-2.5 rounded-2xl font-bold text-sm transition-all cursor-pointer ${tab === 'promotions' ? 'bg-cta text-white' : 'bg-white/10 text-white/60 hover:bg-white/20'}`}>Promociones</button>
+        <div className="max-w-6xl mx-auto mt-6 flex gap-2 relative">
+          <button onClick={() => setTab('products')} className={`px-6 py-2.5 rounded-2xl font-bold text-sm transition-all cursor-pointer ${tab === 'products' ? 'bg-primary text-white shadow-md' : 'bg-black/10 text-black hover:bg-black/20'}`}>Productos</button>
+          <button onClick={() => setTab('promotions')} className={`px-6 py-2.5 rounded-2xl font-bold text-sm transition-all cursor-pointer ${tab === 'promotions' ? 'bg-cta text-black shadow-md' : 'bg-black/10 text-black hover:bg-black/20'}`}>Promociones</button>
         </div>
       </header>
 
