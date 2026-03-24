@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { connectDB } from '@/lib/mongodb';
 import { Promotion } from '@/lib/models';
 import { isAuthenticated } from '@/lib/auth';
@@ -15,5 +16,6 @@ export async function POST(req: Request) {
   await connectDB();
   const body = await req.json();
   const promo = await Promotion.create({ ...body, id: `promo-${Date.now()}` });
+  revalidatePath('/');
   return NextResponse.json(promo, { status: 201 });
 }
