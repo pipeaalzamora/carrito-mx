@@ -6,7 +6,7 @@ frontend:
         - npm ci
     build:
       commands:
-        - env | grep -e MONGODB_URI -e ADMIN_USER -e ADMIN_PASS >> .env.production
+        - env | grep -e MONGODB_URI -e ADMIN_USER -e ADMIN_PASS -e S3_REGION -e S3_BUCKET -e S3_ACCESS_KEY -e S3_SECRET_KEY >> .env.production
         - npm run build
   artifacts:
     baseDirectory: .next
