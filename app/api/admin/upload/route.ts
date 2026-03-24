@@ -20,13 +20,13 @@ export async function POST(req: Request) {
   const key = `productos/${Date.now()}-${filename.replace(/\s/g, '_')}`;
 
   const command = new PutObjectCommand({
-    Bucket: process.env.AWS_S3_BUCKET!,
+    Bucket: process.env.S3_BUCKET!,
     Key: key,
     ContentType: contentType,
   });
 
   const signedUrl = await getSignedUrl(s3, command, { expiresIn: 300 });
-  const publicUrl = `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${key}`;
+  const publicUrl = `https://${process.env.S3_BUCKET}.s3.${process.env.S3_REGION}.amazonaws.com/${key}`;
 
   return NextResponse.json({ signedUrl, publicUrl });
 }
