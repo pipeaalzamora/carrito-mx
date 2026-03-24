@@ -1,20 +1,32 @@
 import { NextResponse } from 'next/server';
-import { writeFile, mkdir } from 'fs/promises';
-import path from 'path';
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { isAuthenticated } from '@/lib/auth';
+
+const s3 = new S3Client({
+  region: process.env.AWS_REGION!,
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+  },
+});
 
 export async function POST(req: Request) {
   if (!await isAuthenticated()) return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
-  const formData = await req.formData();
-  const file = formData.get('image') as File;
-  if (!file) return NextResponse.json({ error: 'No file' }, { status: 400 });
 
-  const bytes = await file.arrayBuffer();
-  const buffer = Buffer.from(bytes);
-  const filename = `${Date.now()}-${file.name.replace(/\s/g, '_')}`;
-  const uploadDir = path.join(process.cwd(), 'public', 'uploads');
-  await mkdir(uploadDir, { recursive: true });
-  await writeFile(path.join(uploadDir, filename), buffer);
+  const { filename, contentType } = await req.json();
+  if (!filename || !contentType) return NextResponse.json({ error: 'Faltan datos' }, { status: 400 });
 
-  return NextResponse.json({ url: `/uploads/${filename}` });
+  const key = `productos/${Date.now()}-${filename.replace(/\s/g, '_')}`;
+
+  const command = new PutObjectCommand({
+    Bucket: process.env.AWS_S3_BUCKET!,
+    Key: key,
+    ContentType: contentType,
+  });
+
+  const signedUrl = await getSignedUrl(s3, command, { expiresIn: 300 });
+  const publicUrl = `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${key}`;
+
+  return NextResponse.json({ signedUrl, publicUrl });
 }

@@ -50,14 +50,21 @@ export default function ProductForm({ product, onSaved, onClose }: { product: an
   async function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (ev) => setForm(f => ({ ...f, image: ev.target?.result as string }));
-    reader.readAsDataURL(file);
     setUploading(true);
-    const fd = new FormData();
-    fd.append('image', file);
-    const res = await fetch('/api/admin/upload', { method: 'POST', body: fd });
-    if (res.ok) { const { url } = await res.json(); setForm(f => ({ ...f, image: url })); }
+
+    // 1. Pide la URL firmada
+    const res = await fetch('/api/admin/upload', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ filename: file.name, contentType: file.type }),
+    });
+    if (!res.ok) { setUploading(false); return; }
+    const { signedUrl, publicUrl } = await res.json();
+
+    // 2. Sube directo a S3
+    await fetch(signedUrl, { method: 'PUT', body: file, headers: { 'Content-Type': file.type } });
+
+    setForm(f => ({ ...f, image: publicUrl }));
     setUploading(false);
   }
 
