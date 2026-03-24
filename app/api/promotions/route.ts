@@ -4,6 +4,8 @@ import { Promotion } from '@/lib/models';
 
 export async function GET() {
   await connectDB();
-  const promos = await Promotion.find({ active: true }).lean();
+  const promos = await Promotion.find({ active: true })
+    .select('id name description discount type productIds -_id')
+    .lean();
   return NextResponse.json(promos);
 }
