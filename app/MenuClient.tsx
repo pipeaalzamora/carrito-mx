@@ -3,17 +3,14 @@ import { useState } from 'react';
 import Link from 'next/link';
 import ProductCard from '@/components/ProductCard';
 
-const CATEGORIES = [
-  { value: 'todos', label: 'Todos' },
-  { value: 'tacos', label: 'Tacos' },
-  { value: 'completos', label: 'Completos' },
-  { value: 'bebidas', label: 'Bebidas' },
-  { value: 'extras', label: 'Extras' },
-];
-
-export default function MenuClient({ products, promotions }: { products: any[]; promotions: any[] }) {
+export default function MenuClient({ products, promotions, categories }: { products: any[]; promotions: any[]; categories: string[] }) {
   const [category, setCategory] = useState('todos');
   const filtered = category === 'todos' ? products : products.filter(p => p.category === category);
+
+  const allCategories = [
+    { value: 'todos', label: 'Todos' },
+    ...categories.map(c => ({ value: c, label: c.charAt(0).toUpperCase() + c.slice(1) })),
+  ];
 
   return (
     <div className="min-h-screen">
@@ -64,7 +61,7 @@ export default function MenuClient({ products, promotions }: { products: any[]; 
       {/* Filtros */}
       <section className="max-w-6xl mx-auto px-4 pt-8 pb-2">
         <div className="flex gap-2 overflow-x-auto scrollbar-hide snap-x snap-mandatory">
-          {CATEGORIES.map(cat => (
+          {allCategories.map(cat => (
             <button key={cat.value} onClick={() => setCategory(cat.value)}
               className={`snap-start shrink-0 px-5 py-2.5 rounded-2xl font-bold text-sm transition-all duration-200 cursor-pointer tracking-wide whitespace-nowrap ${category === cat.value ? 'bg-primary text-white shadow-lg' : 'bg-white text-[#78350F] hover:bg-[#FFF7ED] border border-[#FEE2E2]'}`}>
               {cat.label}

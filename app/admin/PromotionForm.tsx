@@ -13,15 +13,42 @@ export default function PromotionForm({ promotion, products, onSaved, onClose }:
   async function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (ev) => setForm(f => ({ ...f, image: ev.target?.result as string }));
-    reader.readAsDataURL(file);
     setUploading(true);
-    const fd = new FormData();
-    fd.append('image', file);
-    const res = await fetch('/api/admin/upload', { method: 'POST', body: fd });
-    if (res.ok) { const { url } = await res.json(); setForm(f => ({ ...f, image: url })); }
+
+    const compressed = await compressToWebP(file);
+
+    const res = await fetch('/api/admin/upload', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ filename: file.name.replace(/\.[^.]+$/, '.webp'), contentType: 'image/webp' }),
+    });
+    if (!res.ok) { setUploading(false); return; }
+    const { signedUrl, publicUrl } = await res.json();
+
+    await fetch(signedUrl, { method: 'PUT', body: compressed, headers: { 'Content-Type': 'image/webp' } });
+
+    setForm(f => ({ ...f, image: publicUrl }));
     setUploading(false);
+  }
+
+  function compressToWebP(file: File): Promise<Blob> {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      const url = URL.createObjectURL(file);
+      img.onload = () => {
+        const MAX = 1200;
+        let { width, height } = img;
+        if (width > MAX) { height = Math.round((height * MAX) / width); width = MAX; }
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext('2d')!.drawImage(img, 0, 0, width, height);
+        URL.revokeObjectURL(url);
+        canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error('Compresión fallida')), 'image/webp', 0.82);
+      };
+      img.onerror = reject;
+      img.src = url;
+    });
   }
 
   function toggleProduct(id: string) {
