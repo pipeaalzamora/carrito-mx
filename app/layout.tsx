@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'MR.BULLS',
+  title: 'Mr.Bull',
   description: 'Mexican food, sandwich and hot dog',
 };
 

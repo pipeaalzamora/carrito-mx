@@ -56,11 +56,11 @@ export default function DashboardClient({ initialProducts, initialPromotions }: 
         <div className="max-w-6xl mx-auto flex items-center justify-between relative">
           <div className="flex items-center gap-4">
             <div className="w-14 h-14 rounded-2xl overflow-hidden border-2 border-black/10 shadow-md">
-              <img src="/Logo.jpeg" alt="MR.BULLS" className="w-full h-full object-cover" />
+              <img src="/Logo.jpeg" alt="Mr.Bull" className="w-full h-full object-cover" />
             </div>
             <div>
               <h1 className="font-heading text-black text-2xl tracking-wide drop-shadow-sm">Panel Admin</h1>
-              <p className="text-black/60 text-xs font-semibold">MR.BULLS</p>
+              <p className="text-black/60 text-xs font-semibold">Mr.Bull</p>
             </div>
           </div>
           <div className="flex items-center gap-2">

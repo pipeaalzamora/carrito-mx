@@ -22,10 +22,10 @@ export default function MenuClient({ products, promotions }: { products: any[]; 
         <div className="absolute inset-0 bg-white/30" />
         <div className="relative max-w-6xl mx-auto text-center pt-16">
           <div className="w-36 h-36 mx-auto mb-6 rounded-3xl border-4 border-black/10 shadow-2xl overflow-hidden">
-            <img src="/Logo.jpeg" alt="MR.BULLS" className="w-full h-full object-cover" />
+            <img src="/Logo.jpeg" alt="Mr.Bull" className="w-full h-full object-cover" />
           </div>
           <h1 className="font-heading text-4xl sm:text-5xl md:text-7xl leading-[1.1] mb-4">
-            <span className="text-primary">MR.BULLS</span>
+            <span className="text-primary">Mr.Bull</span>
           </h1>
           <p className="text-base md:text-xl text-black/70 max-w-2xl mx-auto leading-relaxed font-light px-2">
             Mexican food, sandwich and hot dog. El mejor sabor en cada bocado.
@@ -90,7 +90,7 @@ export default function MenuClient({ products, promotions }: { products: any[]; 
       {/* Footer */}
       <footer className="bg-[#450A0A] text-white/60 py-10 px-4">
         <div className="max-w-6xl mx-auto text-center">
-          <p className="font-heading text-white text-xl tracking-wide">MR.BULLS</p>
+          <p className="font-heading text-white text-xl tracking-wide">Mr.Bull</p>
           <p className="text-sm mt-1">Mexican food, sandwich and hot dog</p>
           <div className="flex justify-center gap-1 mt-4">
             <div className="w-8 h-1 rounded-full bg-mexico-green" />

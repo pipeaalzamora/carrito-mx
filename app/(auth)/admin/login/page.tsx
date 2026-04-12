@@ -31,10 +31,10 @@ export default function LoginPage() {
       <div className="relative w-full max-w-sm">
         <div className="text-center mb-8">
           <div className="w-20 h-20 mx-auto mb-4 rounded-3xl overflow-hidden border border-white/20 shadow-xl">
-            <img src="/Logo.jpeg" alt="MR.BULLS" className="w-full h-full object-cover" />
+            <img src="/Logo.jpeg" alt="Mr.Bull" className="w-full h-full object-cover" />
           </div>
           <h1 className="font-heading text-white text-3xl">Panel Admin</h1>
-          <p className="text-white/40 text-sm mt-1">MR.BULLS</p>
+          <p className="text-white/40 text-sm mt-1">Mr.Bull</p>
         </div>
         <div className="bg-white rounded-3xl p-8 shadow-2xl">
           <form onSubmit={handleSubmit}>
